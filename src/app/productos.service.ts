@@ -11,18 +11,18 @@ export class ProductosService {
 
   constructor(){
     this.comidas = [
-      new Producto('Big Mac', 1800, "Comida"),
-      new Producto('Cuarto de libra', 1500, "Comida"),
-      new Producto('Smoked BBQ', 2500, "Comida"),
-      new Producto('Cajita Feliz', 1200, "Comida"),
-      new Producto('Doble Cuarto de libra', 2000, "Comida")
+      new Producto(0,'Big Mac', 1800, "Comida"),
+      new Producto(1,'Cuarto de libra', 1500, "Comida"),
+      new Producto(2, 'Smoked BBQ', 2500, "Comida"),
+      new Producto(3,'Cajita Feliz', 1200, "Comida"),
+      new Producto(4,'Doble Cuarto de libra', 2000, "Comida")
     ];
 
     this.bebidas = [
-      new Producto('Coca Cola', 500, "Bebida"),
-      new Producto('Fanta', 500, "Bebida"),
-      new Producto('Sprite', 500, "Bebida"),
-      new Producto('Agua', 200, "Bebida"),
+      new Producto(5,'Coca Cola', 500, "Bebida"),
+      new Producto(6,'Fanta', 500, "Bebida"),
+      new Producto(7,'Sprite', 500, "Bebida"),
+      new Producto(8,'Agua', 200, "Bebida"),
     ]
   }
 

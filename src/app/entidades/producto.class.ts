@@ -1,12 +1,18 @@
 export class Producto {
+    private _id: number;
     private _nombre: string;
     private _precio: number;
     private _tipo: string;
 
-    constructor(nombre: string, precio: number, tipo: string){
+    constructor(id: number ,nombre: string, precio: number, tipo: string){
+        this._id = id;
         this._nombre = nombre;
         this._precio = precio;
         this._tipo = tipo;
+    }
+
+    public getId(): number{
+        return this._id
     }
 
     public getNombre(): string{
