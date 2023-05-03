@@ -1,4 +1,5 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Producto } from '../entidades/producto.class';
 import { ProductosService } from '../productos.service';
@@ -10,7 +11,7 @@ import { InputCantidad } from '../interfaces/input-cantidad.interface';
   templateUrl: './realizar-pedido.component.html',
   styleUrls: ['./realizar-pedido.component.css']
 })
-export class RealizarPedidoComponent {
+export class RealizarPedidoComponent implements OnInit{
 
   public comidas: Producto[] = [];
   public bebidas: Producto[] = [];
@@ -18,9 +19,11 @@ export class RealizarPedidoComponent {
   public bebidasInputActivado: boolean[] = [];
   public productosAgregados: ProductoAgregado[] = [];
   public inputCantidadArr: InputCantidad[] = []
+  public formularioCantidad: FormGroup;
 
-  constructor(private _productosService: ProductosService){
-    
+  constructor(private _productosService: ProductosService, private _fb:FormBuilder){
+    this.formularioCantidad = this._fb.group({});
+
   }
 
   ngOnInit(): void {
@@ -40,6 +43,9 @@ export class RealizarPedidoComponent {
         idProducto: this.comidas[index].getId(),
         cantidad: 0
       })
+
+      //Se declaran los campos de comida
+      this.formularioCantidad.addControl(`campo_${this.comidas[index].getId()}`, this._fb.control(0))
     }
 
     for (let index = 0; index < this.bebidas.length; index++) {
@@ -52,6 +58,9 @@ export class RealizarPedidoComponent {
         idProducto: this.bebidas[index].getId(),
         cantidad: 0
       })
+
+      //Se declaran los campos de bebidas
+      this.formularioCantidad.addControl(`campo_${this.bebidas[index].getId()}`, this._fb.control(0))
       
     }
   }
@@ -100,6 +109,10 @@ export class RealizarPedidoComponent {
 
   public agregarProducto( producto:Producto ): void{
     console.log(this.inputCantidadArr);
+  }
+
+  public onSubmit(): void{
+    console.log(this.formularioCantidad.value)
   }
 
 }
