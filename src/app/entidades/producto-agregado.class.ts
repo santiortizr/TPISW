@@ -38,4 +38,6 @@ export class ProductoAgregado {
     public getIdProducto(): number{
         return this._producto.getId();  
     }
+
+    
 }
