@@ -26,8 +26,8 @@
                         </h6>
 
                         <div *ngIf="this.comidasInputActivado[i]" class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">+</span>
-                            <input [formControlName]="'campo_' + item.getId()" (input)="agregarProducto( item )" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+                            <span class="input-group-text bg-secondary text-white" id="basic-addon1">+</span>
+                            <input [formControlName]="'campo_' + item.getId()" (input)="agregarProducto( item )" type="number" class="form-control bg-secondary text-white" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
                             <button *ngIf="this.cantidadValida( item.getId() )" (click)="activarInputBebidas( i )" type="button" class="btn btn-success">Agregar</button>
                         </div>
 
@@ -46,9 +46,9 @@
                             <button *ngIf="this.bebidasInputActivado[i]" (click)="desactivarInputBebidas( i )" type="button" class="btn btn-danger">-</button>
                         </h6>
 
-                        <div *ngIf="this.bebidasInputActivado[i]" class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">+</span>
-                            <input [formControlName]="'campo_' + item.getId()" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" [(ngModel)]="this.inputCantidadArr[ this.comidas.length - 1 + i ]" aria-describedby="basic-addon1">
+                        <div *ngIf="this.bebidasInputActivado[i]" class="input-group mb-3 ">
+                            <span class="input-group-text bg-secondary text-white" id="basic-addon1">+</span>
+                            <input [formControlName]="'campo_' + item.getId()" type="number" class="form-control bg-secondary text-white" placeholder="Cantidad" aria-label="Cantidad" [(ngModel)]="this.inputCantidadArr[ this.comidas.length - 1 + i ]" aria-describedby="basic-addon1">
                             <button (input)="agregarProducto( item )" (click)="activarInputBebidas( i )" type="button" class="btn btn-success" [disabled]="!this.cantidadValida( item.getId() )">Agregar</button>
                         </div>
 
