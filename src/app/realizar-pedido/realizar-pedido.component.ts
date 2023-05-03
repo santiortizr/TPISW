@@ -65,7 +65,10 @@ export class RealizarPedidoComponent implements OnInit{
     }
   }
 
+  
+
   public activarInputComidas( i : number ): void{
+    this.desactivarTodos();
     this.comidasInputActivado[i] = true;
   }
 
@@ -74,17 +77,37 @@ export class RealizarPedidoComponent implements OnInit{
   }
 
   public activarInputBebidas( i : number ): void{
+    this.desactivarTodos();
     this.bebidasInputActivado[i] = true;
   }
 
   public desactivarInputBebidas( i : number ): void{
     this.bebidasInputActivado[i] = false;
   }
-  
+
+  public desactivarTodos(): void{
+    for (let index = 0; index < this.comidas.length; index++) {
+      this.comidasInputActivado[index] = false;
+      this.bebidasInputActivado[index] = false;
+    
+    }
+  }
+
+  public chequearValido( cant : number ) :void{
+      let botones = document.querySelectorAll("#agregar"); 
+      for (let index = 0; index < botones.length; index++) {
+        let boton = botones[index] as HTMLButtonElement;
+        if (cant > 0) {
+          boton.disabled = false;
+        } else {
+          boton.disabled = true;
+        }
+        console.log(index);
+      }
+  }
+
   public cantidadValida( id : number ):boolean{
     let productoEncontrado:any = -1;
-      
-
 
     for(let producto of this.inputCantidadArr){
       
@@ -94,7 +117,6 @@ export class RealizarPedidoComponent implements OnInit{
       }
 
     }
-
 
     if(productoEncontrado == -1){
       return false;
@@ -107,8 +129,9 @@ export class RealizarPedidoComponent implements OnInit{
     return false;
   }
 
-  public agregarProducto( producto:Producto ): void{
-    console.log(this.inputCantidadArr);
+  public agregarProducto( producto:Producto, cantidad:number, observacion:string): void{
+    let agregar:ProductoAgregado = new ProductoAgregado(producto, cantidad, observacion); 
+    this.productosAgregados.push(agregar);
   }
 
   public onSubmit(): void{
