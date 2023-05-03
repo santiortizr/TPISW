@@ -1,10 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Producto } from '../entidades/producto.class';
 import { ProductosService } from '../productos.service';
 import { ProductoAgregado } from '../entidades/producto-agregado.class';
 import { InputCantidad } from '../interfaces/input-cantidad.interface';
+import { ValueFormularioDetalle } from '../interfaces/value-formulariodetalle.interface';
+import { CarritoService } from '../carrito.service';
 
 @Component({
   selector: 'app-realizar-pedido',
@@ -15,22 +17,24 @@ export class RealizarPedidoComponent implements OnInit{
 
   public comidas: Producto[] = [];
   public bebidas: Producto[] = [];
+  public productos: Producto[];
   public comidasInputActivado: boolean[] = [];
   public bebidasInputActivado: boolean[] = [];
   public productosAgregados: ProductoAgregado[] = [];
   public inputCantidadArr: InputCantidad[] = []
-  public formularioCantidad: FormGroup;
+  public formularioDetalle: FormGroup;
 
-  constructor(private _productosService: ProductosService, private _fb:FormBuilder){
-    this.formularioCantidad = this._fb.group({});
-
+  constructor(private _productosService: ProductosService, private _fb:FormBuilder, private _carritoService: CarritoService){
+    this.formularioDetalle = this._fb.group({});
+    this.comidas = this._productosService.getComidas();
+    this.bebidas = this._productosService.getBebidas();
+    this.productos = this.comidas.concat(this.bebidas);
   }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.comidas = this._productosService.getComidas();
-    this.bebidas = this._productosService.getBebidas();
+    
 
 
     for (let index = 0; index < this.comidas.length; index++) {
@@ -44,9 +48,16 @@ export class RealizarPedidoComponent implements OnInit{
         cantidad: 0
       })
 
+      
+
       //Se declaran los campos de comida
-      this.formularioCantidad.addControl(`campo_${this.comidas[index].getId()}`, this._fb.control(0))
+      this.formularioDetalle.addControl(`campo_${this.comidas[index].getId()}`, this._fb.control(0))
+      this.formularioDetalle.addControl(`observacion_${this.comidas[index].getId()}`, this._fb.control("Sin Observaciones"))
+
+      let control =  this.formularioDetalle.get(`campo_${this.comidas[index].getId()}`);
+      control?.setValidators([Validators.min(0)]) 
     }
+  
 
     for (let index = 0; index < this.bebidas.length; index++) {
 
@@ -60,8 +71,11 @@ export class RealizarPedidoComponent implements OnInit{
       })
 
       //Se declaran los campos de bebidas
-      this.formularioCantidad.addControl(`campo_${this.bebidas[index].getId()}`, this._fb.control(0))
-      
+      this.formularioDetalle.addControl(`campo_${this.bebidas[index].getId()}`, this._fb.control(0))
+      this.formularioDetalle.addControl(`observacion_${this.bebidas[index].getId()}`, this._fb.control("Sin Observaciones"))
+
+      let control =  this.formularioDetalle.get(`campo_${this.bebidas[index].getId()}`);
+      control?.setValidators([Validators.min(0)]) 
     }
   }
 
@@ -129,21 +143,59 @@ export class RealizarPedidoComponent implements OnInit{
   }
 
 
-  public agregarProducto( id : number): void{
-    let div = <HTMLInputElement>document.querySelectorAll('.input-group.mb-3')[id];
-    let producto = this.comidas[id];
+  // public agregarProducto( id : number): void{
+  //   let div = <HTMLInputElement>document.querySelectorAll('.input-group.mb-3')[id];
+  //   let producto = this.comidas[id];
 
-    let cantidad = div.querySelector('#cantidad') as HTMLInputElement;
-    let observacion = div.querySelector('#observacion') as HTMLInputElement;
-    console.log(cantidad);
-    console.log(observacion);
-    let agregar:ProductoAgregado = new ProductoAgregado(producto, parseInt(cantidad.value), observacion.value); 
-    this.productosAgregados.push(agregar);
-    console.log(this.productosAgregados);
+  //   let cantidad = div.querySelector('#cantidad') as HTMLInputElement;
+  //   let observacion = div.querySelector('#observacion') as HTMLInputElement;
+  //   console.log(cantidad);
+  //   console.log(observacion);
+  //   let agregar:ProductoAgregado = new ProductoAgregado(producto, parseInt(cantidad.value), observacion.value); 
+  //   this.productosAgregados.push(agregar);
+  //   console.log(this.productosAgregados);
+  // }
+
+
+  public onSubmit( idCampo: number ): void{
+    // console.log(this.formularioDetalle.value)
+    // console.log(this.formularioDetalle.controls['campo_0'].errors?.['min'])
+
+    let cantidad : number = this.formularioDetalle.controls["campo_" + idCampo].value;
+
+    let observaciones: string = this.formularioDetalle.controls["observacion_" + idCampo].value;
+
+    if(cantidad == 0){
+      return;
+    }
+
+    let prodACarrito: ProductoAgregado = new ProductoAgregado( 
+      this.buscarProductoPorId(idCampo),
+      cantidad,
+      observaciones
+    )
+
+    this._carritoService.agregarACarrito(prodACarrito);
+
+    this.formularioDetalle.controls["campo_" + idCampo].reset();
+
+    console.log(this._carritoService.getCarrito())
   }
 
-  public onSubmit(): void{
-    console.log(this.formularioCantidad.value)
+
+
+  private buscarProductoPorId( id: number ): Producto{
+    let productoEncontrado: Producto =  new Producto(-1, "No encontrado", -1, "0")
+    for (const prod of this.productos) {
+      if(prod.getId() == id){
+        productoEncontrado = prod;
+        break;
+      }
+    }
+
+    return productoEncontrado;
   }
+
+
 
 }

@@ -27,5 +27,13 @@ export class Producto {
         return this._tipo
     }
 
+    public equals( prodB: Producto ): boolean{
+        if(prodB.getId() == this._id){
+            return true;
+        }
+
+        return false;
+    }
+
     
 }

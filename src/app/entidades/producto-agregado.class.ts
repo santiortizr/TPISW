@@ -3,12 +3,12 @@ import { Producto } from "./producto.class";
 export class ProductoAgregado {
     private _producto: Producto;
     private _cantidad: number;
-    private _especificaciones: string;
+    private _observaciones: string;
 
     constructor(prod: Producto, cant: number, esp: string){
         this._producto = prod;
         this._cantidad = cant;
-        this._especificaciones = esp;
+        this._observaciones = esp;
     }
 
     public getProducto(): Producto {
@@ -20,7 +20,7 @@ export class ProductoAgregado {
     }
 
     public getEspecificaciones(): string {
-        return this._especificaciones;
+        return this._observaciones;
     }
 
     public setCantidad( cant:number ): void {
@@ -28,6 +28,14 @@ export class ProductoAgregado {
     }
 
     public setEspecificaciones( esp:string ): void {
-        this._especificaciones = esp;
+        this._observaciones = esp;
+    }
+
+    public equals( prodB:ProductoAgregado ){
+        return this._producto.equals(prodB.getProducto())
+    }
+    
+    public getIdProducto(): number{
+        return this._producto.getId();  
     }
 }
