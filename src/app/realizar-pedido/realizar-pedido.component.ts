@@ -128,9 +128,18 @@ export class RealizarPedidoComponent implements OnInit{
     return false;
   }
 
-  public agregarProducto( producto:Producto, cantidad:number, observacion:string): void{
-    let agregar:ProductoAgregado = new ProductoAgregado(producto, cantidad, observacion); 
+
+  public agregarProducto( id : number): void{
+    let div = <HTMLInputElement>document.querySelectorAll('.input-group.mb-3')[id];
+    let producto = this.comidas[id];
+
+    let cantidad = div.querySelector('#cantidad') as HTMLInputElement;
+    let observacion = div.querySelector('#observacion') as HTMLInputElement;
+    console.log(cantidad);
+    console.log(observacion);
+    let agregar:ProductoAgregado = new ProductoAgregado(producto, parseInt(cantidad.value), observacion.value); 
     this.productosAgregados.push(agregar);
+    console.log(this.productosAgregados);
   }
 
   public onSubmit(): void{

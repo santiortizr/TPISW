@@ -27,9 +27,9 @@
 
                         <div *ngIf="this.comidasInputActivado[i]" class="input-group mb-3">
                             <span class="input-group-text bg-secondary text-white" id="basic-addon1">+</span>
-                            <input [formControlName]="'campo_' + item.getId()"  type="number" class="form-control bg-secondary text-white" onchange="chequearValido(this.value)" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
-                            <input type="text" class="form-control bg-secondary text-white" placeholder="Observacion" aria-label="Observacion" aria-describedby="basic-addon1">
-                            <button id="agregar" (click)="activarInputComidas( i )" type="button" class="btn btn-success">Agregar</button>
+                            <input id="cantidad" [formControlName]="'campo_' + item.getId()"  type="number" class="form-control bg-secondary text-white" onchange="chequearValido(this.value)" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+                            <input id="observacion" type="text" class="form-control bg-secondary text-white" placeholder="Observacion" aria-label="Observacion" aria-describedby="basic-addon1">
+                            <button id="agregar" (click)="activarInputComidas( i ); agregarProducto(i)" type="button" class="btn btn-success">Agregar</button>
                         </div>
 
                     </li>
