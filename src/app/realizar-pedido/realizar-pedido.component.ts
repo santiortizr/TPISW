@@ -51,7 +51,7 @@ export class RealizarPedidoComponent implements OnInit{
       
 
       //Se declaran los campos de comida
-      this.formularioDetalle.addControl(`campo_${this.comidas[index].getId()}`, this._fb.control(1))
+      this.formularioDetalle.addControl(`campo_${this.comidas[index].getId()}`, this._fb.control(0))
       this.formularioDetalle.addControl(`observacion_${this.comidas[index].getId()}`, this._fb.control(""))
 
       let control =  this.formularioDetalle.get(`campo_${this.comidas[index].getId()}`);
@@ -72,7 +72,7 @@ export class RealizarPedidoComponent implements OnInit{
 
       //Se declaran los campos de bebidas
       this.formularioDetalle.addControl(`campo_${this.bebidas[index].getId()}`, this._fb.control(0))
-      this.formularioDetalle.addControl(`observacion_${this.bebidas[index].getId()}`, this._fb.control("Sin Observaciones"))
+      this.formularioDetalle.addControl(`observacion_${this.bebidas[index].getId()}`, this._fb.control(""))
 
       let control =  this.formularioDetalle.get(`campo_${this.bebidas[index].getId()}`);
       control?.setValidators([Validators.min(0)]) 
