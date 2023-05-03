@@ -102,9 +102,17 @@ export class RealizarPedidoComponent implements OnInit{
   public desactivarTodos(): void{
     for (let index = 0; index < this.comidas.length; index++) {
       this.comidasInputActivado[index] = false;
-      this.bebidasInputActivado[index] = false;
-    
+      
+      this.formularioDetalle.controls[`campo_${this.comidas[index].getId()}`].reset();
+      this.formularioDetalle.controls[`observacion_${this.comidas[index].getId()}`].reset();
     }
+    for (let index = 0; index < this.bebidas.length; index++) {
+      this.bebidasInputActivado[index] = false;
+
+      this.formularioDetalle.controls[`campo_${this.bebidas[index].getId()}`].reset();
+      this.formularioDetalle.controls[`observacion_${this.bebidas[index].getId()}`].reset();
+    }
+
   }
 
   public cantidadValida( id : number ):boolean{
@@ -165,8 +173,6 @@ export class RealizarPedidoComponent implements OnInit{
 
     this._carritoService.agregarACarrito(prodACarrito);
     this.productosAgregados = this.productosAgregados + cantidad;
-    this.formularioDetalle.controls["campo_" + idCampo].reset();
-    this.formularioDetalle.controls["observacion_" + idCampo].reset();
     this.desactivarTodos();
     console.log(this._carritoService.getCarrito())
   }
