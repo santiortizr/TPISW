@@ -20,7 +20,7 @@ export class RealizarPedidoComponent implements OnInit{
   public productos: Producto[];
   public comidasInputActivado: boolean[] = [];
   public bebidasInputActivado: boolean[] = [];
-  public productosAgregados: ProductoAgregado[] = [];
+  public productosAgregados: number = 0;
   public inputCantidadArr: InputCantidad[] = []
   public formularioDetalle: FormGroup;
 
@@ -51,8 +51,8 @@ export class RealizarPedidoComponent implements OnInit{
       
 
       //Se declaran los campos de comida
-      this.formularioDetalle.addControl(`campo_${this.comidas[index].getId()}`, this._fb.control(0))
-      this.formularioDetalle.addControl(`observacion_${this.comidas[index].getId()}`, this._fb.control("Sin Observaciones"))
+      this.formularioDetalle.addControl(`campo_${this.comidas[index].getId()}`, this._fb.control(1))
+      this.formularioDetalle.addControl(`observacion_${this.comidas[index].getId()}`, this._fb.control(""))
 
       let control =  this.formularioDetalle.get(`campo_${this.comidas[index].getId()}`);
       control?.setValidators([Validators.min(0)]) 
@@ -105,18 +105,6 @@ export class RealizarPedidoComponent implements OnInit{
       this.bebidasInputActivado[index] = false;
     
     }
-  }
-
-  public chequearValido( cant : number ) :void{
-      let botones = document.querySelectorAll("#agregar"); 
-      for (let index = 0; index < botones.length; index++) {
-        let boton = botones[index] as HTMLButtonElement;
-        if (cant > 0) {
-          boton.disabled = false;
-        } else {
-          boton.disabled = true;
-        }
-      }
   }
 
   public cantidadValida( id : number ):boolean{
@@ -176,9 +164,10 @@ export class RealizarPedidoComponent implements OnInit{
     )
 
     this._carritoService.agregarACarrito(prodACarrito);
-
+    this.productosAgregados = this.productosAgregados + cantidad;
     this.formularioDetalle.controls["campo_" + idCampo].reset();
-
+    this.formularioDetalle.controls["observacion_" + idCampo].reset();
+    this.desactivarTodos();
     console.log(this._carritoService.getCarrito())
   }
 
