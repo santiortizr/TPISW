@@ -102,7 +102,6 @@ export class RealizarPedidoComponent implements OnInit{
         } else {
           boton.disabled = true;
         }
-        console.log(index);
       }
   }
 
