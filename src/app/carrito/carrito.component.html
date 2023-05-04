@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4 bg-dark">
     <div class="d-flex justify-content-center row">
         <h1 class="d-flex justify-content-center">Carrito</h1>
 
@@ -20,7 +20,7 @@
 
 
 
-    <form [formGroup]="formularioCarrito" action="">
+    <form [formGroup]="formularioCarrito" (submit)="procederAPago()">
         <table *ngIf="this.productosEnCarrito.length > 0" class="table mb-1">
             <thead>
                 <tr>
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                     </td>
-                    <td><input id="observacion" [formControlName]="'observacion_' + item.getIdProducto()" type="number" class="form-control bg-secondary text-white" placeholder="Observacion" aria-label="Cantidad" aria-describedby="basic-addon1" min="0"></td>
+                    <td><input id="observacion" [formControlName]="'observacion_' + item.getIdProducto()" type="text" class="form-control bg-secondary text-white" placeholder="Observacion" aria-label="Cantidad" aria-describedby="basic-addon1"></td>
                     <td>{{ item.getProducto().getPrecio() }}</td>
                     <td>{{ this.getSubtotal( item ) }}</td>
                     <td><button (click)="eliminarItemDeCarrito( item.getIdProducto() )" type="button" class="btn btn-outline-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
@@ -58,7 +58,7 @@
 
         <div class="row d-flex justify-content-center">
             <div class="col-4">
-                <button type="submit" class="btn btn-success mb-3 w-100" [disabled]="this.productosEnCarrito.length == 0 && !this.formularioCarrito.valid">Proceder a Pago</button>
+                <button routerLink="/pago" type="submit" class="btn btn-success mb-3 w-100" [disabled]="this.productosEnCarrito.length == 0 || !this.formularioCarrito.valid">Proceder a Pago</button>
             </div>
         </div>
 

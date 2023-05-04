@@ -1,0 +1,26 @@
+<div class="container mt-4 bg-dark d-flex justify-content-center">
+    <div class=" row">
+
+        <div class="col">
+            <form [formGroup]="formularioEfectivo">
+                <div class="col">
+                    <div class="input-group w-100" data-bs-theme="dark">
+                        <span class="input-group-text">Monto a Abonar</span>
+                        <input type="number" placeholder="Monto" class="form-control" formControlName="monto">
+                    </div>
+                </div>
+            </form>
+
+            <div *ngIf="this.formularioEfectivo.controls['monto'].errors?.['required']" class="row">
+                <div class="col-8 text-danger"> Este campo es obligatorio.</div>
+            </div>
+            <div *ngIf="this.formularioEfectivo.controls['monto'].errors?.['min']" class="row">
+                <div class="col-8 text-danger">El monto minimo debe ser de {{ montoMinimo }}</div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>

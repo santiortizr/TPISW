@@ -1,0 +1,47 @@
+<div class="container mt-1 bg-dark">
+    <div class="row mb-3 ">
+        <h1>Pago con Tarjeta de Credito</h1>
+    </div>
+
+
+    <form [formGroup]="formularioTC" (submit)="onSubmit()">
+        <div class="row">
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Numero de Tarjeta</span>
+                    <input type="text" formControlName="nroTarjeta" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">Venc</span>
+                    <span class="input-group-text" id="basic-addon1">Mes</span>
+                    <select class="form-select" formControlName="nroTarjeta">
+                        <option *ngFor="let mes of meses; let i = index" [value]="i"> {{ mes }} </option>
+                    </select>
+                    <span class="input-group-text" id="basic-addon1">Año</span>
+                    <input type="number" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">Titular</span>
+                    <input formControlName="titular" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">CVC</span>
+                    <input formControlName="cvc" type="string" class="form-control" aria-label="Username" aria-describedby="basic-addon1" maxlength="3">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+</div>

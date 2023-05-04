@@ -21,7 +21,11 @@ export class CarritoComponent implements OnInit{
   ngOnInit(): void {
     //obtener productos en carrito
     this.productosEnCarrito = this._carritoService.getCarrito();
-  
+    
+    for(let i = 0; i < this.productosEnCarrito.length; i++){
+      console.log(this.productosEnCarrito[i].getEspecificaciones())
+    }
+
     //inicializar formularios
     for ( let i = 0; i < this.productosEnCarrito.length; i++) {
       this.formularioCarrito.addControl(`campo_${this.productosEnCarrito[i].getIdProducto()}`, this._fb.control( this.productosEnCarrito[i].getCantidad() ));
@@ -57,6 +61,24 @@ export class CarritoComponent implements OnInit{
   
     return item.getProducto().getPrecio() * controlCantidad!.value;
  
+  }
+  
+  
+  public procederAPago(){
+      this.procesarFormulario();
+  }
+
+  //Metodo que procesa la informacion obtenida del carrito y actualiza el mismo en el Service.
+  public procesarFormulario(): void{
+    let carritoActualizado: ProductoAgregado[] = [];
+    for( let item of this.productosEnCarrito ){
+
+      carritoActualizado.push( new ProductoAgregado( item.getProducto(),
+                                                     this.formularioCarrito.get(`campo_${item.getIdProducto()}`)!.value,
+                                                     this.formularioCarrito.get(`observacion_${item.getIdProducto()}`)!.value ))
+    
+    }
+    this._carritoService.actualizarCarrito(carritoActualizado);
   }
   
 

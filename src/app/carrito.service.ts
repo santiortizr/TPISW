@@ -61,5 +61,19 @@ export class CarritoService {
     }
   return productoEncontrado;
   }
+
+  public actualizarCarrito( nuevoCarrito: ProductoAgregado[] ): void{
+    console.log(nuevoCarrito)
+    this.carrito = nuevoCarrito;
+  }
+
+  public getTotal(): number {
+    let subtotal: number = 0;
+    for(let elem of this.carrito){
+      subtotal += elem.getCantidad() * elem.getProducto().getPrecio();
+    }
+
+    return subtotal;
+  }
   
 }
