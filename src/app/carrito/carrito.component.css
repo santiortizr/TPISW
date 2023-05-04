@@ -2,3 +2,18 @@ thead,
 tbody {
     color: #fff
 }
+
+.input-container {
+    position: relative;
+}
+
+.input-container .alert {
+    position: absolute;
+    bottom: -1.5em;
+    left: 0;
+    width: 100%
+}
+
+.input-container .alert.show {
+    display: block;
+}

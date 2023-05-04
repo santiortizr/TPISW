@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ProductoAgregado } from './entidades/producto-agregado.class';
 import { Observable, Subject } from 'rxjs';
+import { Producto } from './entidades/producto.class';
 
 @Injectable({
   providedIn: 'root'
@@ -36,4 +37,29 @@ export class CarritoService {
     return this.carrito;
   }
 
+  public eliminarItemDeCarrito( id:number ):void{
+    for (let i = 0; i < this.carrito.length; i++) {
+      if( id == this.carrito[i].getIdProducto() ){
+        this.carrito.splice(i, 1);
+        break;
+      }
+    }
+    console.log(this.carrito)   
+  }
+
+  public buscarProductoPorId( id:number ):ProductoAgregado{
+    let productoEncontrado = new ProductoAgregado(
+      new Producto(-1, "-1", -1, "-1"),
+      -1,
+      "-1"
+    )
+    for (let i = 0; i < this.carrito.length; i++) {
+      if(this.carrito[i].getIdProducto() == id){
+        productoEncontrado = this.carrito[i];  
+        break;
+      }
+    }
+  return productoEncontrado;
+  }
+  
 }
