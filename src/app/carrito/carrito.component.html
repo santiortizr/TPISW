@@ -1,0 +1,30 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-center row">
+        <h1 class="d-flex justify-content-center">Carrito</h1>
+
+    </div>
+
+    <hr>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio Unitario</th>
+                <th scope="col">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of productosEnCarrito">
+                <th scope="row"> {{ item.getProducto().getNombre() }} </th>
+                <td>{{ item.getCantidad() }}</td>
+                <td>{{ item.getProducto().getPrecio() }}</td>
+                <td>{{ item.getProducto().getPrecio() * item.getCantidad() }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+</div>

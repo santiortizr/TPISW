@@ -6,11 +6,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RealizarPedidoComponent } from './realizar-pedido/realizar-pedido.component';
+import { CarritoComponent } from './carrito/carrito.component';
+import { CarritoService } from './carrito.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RealizarPedidoComponent
+    RealizarPedidoComponent,
+    CarritoComponent
   ],
   imports: [
     BrowserModule,
@@ -18,7 +21,7 @@ import { RealizarPedidoComponent } from './realizar-pedido/realizar-pedido.compo
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ CarritoService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
