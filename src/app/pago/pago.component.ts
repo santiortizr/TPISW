@@ -15,7 +15,6 @@ export class PagoComponent implements OnInit{
   public ciudades: string[];
   public formularioDireccion!: FormGroup;
   public componenteCargado: any = TarjetaDeDebitoComponent;
-  public opcionEnvioSeleccionada: string;
 
   constructor(private _fb: FormBuilder, private resolver: ComponentFactoryResolver){
     this.ciudades = [
@@ -48,7 +47,6 @@ export class PagoComponent implements OnInit{
 
 
 
-    this.opcionEnvioSeleccionada = "Lo Antes Posible"
   }
 
   ngOnInit(): void {
@@ -57,27 +55,41 @@ export class PagoComponent implements OnInit{
       numero       : ['', [Validators.required, Validators.min(0)]],
       calle        : ['', [Validators.required]],
       referencias  : ['', []],
-      fechaHora    : ['', []]
+      opcionEnvioSeleccionada : [ 'Lo antes posible', [Validators.required]],
+      fechaHora    : ['', [ this.checkearFechaHoraValida]]
       //fecha        : ['', [this.checkearFechaValida]],
       //hora         : ['', [this.checkearHoraValida]] 
     })
   }
 
-  public checkearFechaHoraValida( control : FormControl ){
+  public checkearFechaHoraValida = (control: FormControl) => {
+
+    if (!this.formularioDireccion) {
+      return;
+    }
+
     const fechaHoraInput = new Date(control.value);
+  
+    // Obtener la fecha y hora actual
+    const fechaHoraActual = new Date();
+  
+    // Obtener el valor de la opción de envío seleccionada
+    const opcionEnvioSeleccionada = this.formularioDireccion.get('opcionEnvioSeleccionada')?.value;
+  
+    // Comparar las fechas y horas
+    if (((fechaHoraInput > fechaHoraActual) && opcionEnvioSeleccionada == "fecha") || opcionEnvioSeleccionada == "Lo antes posible") {
+      return null;
+    } else if( opcionEnvioSeleccionada == "Lo antes posible" ){
+      return null;
+    } else if( ((fechaHoraInput < fechaHoraActual || fechaHoraInput === null) && opcionEnvioSeleccionada == "Lo antes posible")){
+      return null
+    }
 
-  // Obtener la fecha y hora actual
-  const fechaHoraActual = new Date();
-
-  // Comparar las fechas y horas
-  if ((fechaHoraInput > fechaHoraActual) && this.opcionEnvioSeleccionada == "fecha") {
-    return null
-  } else {
     return {
       fechaHoraInvalida: true
-    }
+    };
   }
-  }
+
 
   public checkearHoraValida( control : FormControl ){
     // Obtener el valor del input
@@ -102,7 +114,7 @@ export class PagoComponent implements OnInit{
   
 
   checkOp(){
-    console.log(this.opcionEnvioSeleccionada)
+    console.log(this.formularioDireccion.controls['opcionEnvioSeleccionada'].value)
   }
 
   checkErrors(){

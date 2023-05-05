@@ -1,4 +1,4 @@
-<div class="container mt-4 bg-dark">
+<div class="container mt-4 general rounded">
     <div class="d-flex justify-content-center row">
         <h1 class="d-flex justify-content-center">Carrito</h1>
 
@@ -57,6 +57,9 @@
         </table>
 
         <div class="row d-flex justify-content-center">
+            <div class="col-4">
+                <button routerLink="/" type="button" class="btn btn-success mb-3 w-100">Volver a realizar pedido</button>
+            </div>
             <div class="col-4">
                 <button routerLink="/pago" type="submit" class="btn btn-success mb-3 w-100" [disabled]="this.productosEnCarrito.length == 0 || !this.formularioCarrito.valid">Proceder a Pago</button>
             </div>

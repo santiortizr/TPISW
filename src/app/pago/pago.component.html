@@ -1,5 +1,5 @@
-<div class="container mt-4 bg-dark" data-bs-theme="dark">
-    <div class="d-flex justify-content-left row mt-4" data-bs-them="dark">
+<div class="container mt-4 general rounded" data-bs-theme="dark">
+    <div class="d-flex justify-content-left row mt-4">
 
         <div class="col-8 mt-4">
             <h1>Informacion Adicional</h1>
@@ -41,15 +41,34 @@
             </div>
         </div>
 
+        <div class="row mb-4">
+            <div class="col-6">
+                <div class="input-group">
+                    <div class="form-check col-3">
+                        <input class="form-check-input" (click)="checkOp()" type="radio" value="fecha" formControlName="opcionEnvioSeleccionada">
+                        <label class="form-check-label" for="flexRadioDefault1" value="fecha">
+                          Establecer fecha y hora de envio
+                        </label>
+                    </div>
+                    <div class="form-check col-3">
+                        <input class="form-check-input" (click)="checkOp()" type="radio" value="Lo antes posible" formControlName="opcionEnvioSeleccionada">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          Enviar lo antes posible
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <div *ngIf="opcionEnvioSeleccionada == 'fecha'" class="row mb-4">
-            <div class="col-3">
+
+        <div *ngIf="formularioDireccion.controls['opcionEnvioSeleccionada'].value == 'fecha'" class="row mb-4">
+            <div class="col-4">
                 <div class="input-group">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Fecha y Hora</span>
-                        <input type="datetime-local" class="form-control" placeholder="Calle" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="datetime-local" formControlName="fechaHora" class="form-control" placeholder="Calle" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
-                    <div *ngIf="(this.formularioDireccion.controls['fechaHora'].errors?.['fechaHoraInvalida']) || ( this.formularioDireccion.controls['fechaHora'].touched)" class="row">
+                    <div *ngIf="(this.formularioDireccion.controls['fechaHora'].errors?.['fechaHoraInvalida']) && ( this.formularioDireccion.controls['fechaHora'].touched)" class="row">
                         <div class="col-8 text-danger">Introduzca una fecha y hora validas por favor.</div>
                     </div>
                 </div>
@@ -58,29 +77,13 @@
 
     </form>
 
-    <div class="row mb-4">
-        <div class="col-6">
-            <div class="input-group">
-                <div class="form-check col-3">
-                    <input class="form-check-input" (click)="checkOp()" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="fecha" [(ngModel)]="opcionEnvioSeleccionada">
-                    <label class="form-check-label" for="flexRadioDefault1" value="fecha">
-                      Establecer fecha y hora de envio
-                    </label>
-                </div>
-                <div class="form-check col-3">
-                    <input class="form-check-input" (click)="checkOp()" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="Lo antes posible" [(ngModel)]="opcionEnvioSeleccionada" checked>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                      Enviar lo antes posible
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <br>
 
-    <button class="btn btn-success" [disabled]="!this.formularioDireccion.valid" routerLink="/checkout">Ir a checkout</button>
-    <hr>
+    <button class="btn btn-success mb-4" [disabled]="!this.formularioDireccion.valid" routerLink="/checkout">Ir a checkout</button>
+
+    <br>
 
 
 </div>
