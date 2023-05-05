@@ -13,6 +13,8 @@ import { EfectivoComponent } from './efectivo/efectivo.component';
 import { TarjetaDeCreditoComponent } from './tarjeta-de-credito/tarjeta-de-credito.component';
 import { TarjetaDeDebitoComponent } from './tarjeta-de-debito/tarjeta-de-debito.component';
 import { CommonModule } from '@angular/common';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { PedidoFinalizadoComponent } from './pedido-finalizado/pedido-finalizado.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { CommonModule } from '@angular/common';
     PagoComponent,
     EfectivoComponent,
     TarjetaDeCreditoComponent,
-    TarjetaDeDebitoComponent
+    TarjetaDeDebitoComponent,
+    CheckoutComponent,
+    PedidoFinalizadoComponent
   ],
   imports: [
     BrowserModule,

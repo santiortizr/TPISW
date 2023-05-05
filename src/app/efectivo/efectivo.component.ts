@@ -20,7 +20,9 @@ export class EfectivoComponent implements OnInit{
       monto: [this.montoMinimo, [Validators.required, Validators.min(this.montoMinimo)]]
     })
   }
-
-  
+ 
+  public onSubmit(){
+    this._carritoService.actualizarCarrito([]);
+  }
   
 }

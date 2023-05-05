@@ -15,13 +15,16 @@
                     <select class="form-select" formControlName="selectCiudad">
                         <option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</option>
                     </select>
+                    <div *ngIf="this.formularioDireccion.controls['selectCiudad'].errors?.['required'] && this.formularioDireccion.controls['selectCiudad'].touched" class="row">
+                        <div class="col-8 text-danger">Debe seleccionar una ciudad.</div>
+                    </div>
                 </div>
 
             </div>
         </div>
 
 
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-6">
                 <div class="input-group">
                     <div class="input-group mb-3">
@@ -30,47 +33,54 @@
                         <input type="text" class="form-control" placeholder="Numero" formControlName="numero" aria-label="Username" aria-describedby="basic-addon1">
                         <input type="text" class="form-control" placeholder="Referencia" formControlName="referencias" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
+                    <div *ngIf="(this.formularioDireccion.controls['calle'].errors?.['required'] || this.formularioDireccion.controls['numero'].errors?.['required']) && ( this.formularioDireccion.controls['calle'].touched || this.formularioDireccion.controls['numero'].touched)"
+                        class="row">
+                        <div class="col-8 text-danger">Los campos calle y numero son obligatorios</div>
+                    </div>
                 </div>
             </div>
         </div>
 
 
+        <div *ngIf="opcionEnvioSeleccionada == 'fecha'" class="row mb-4">
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Fecha y Hora</span>
+                        <input type="datetime-local" class="form-control" placeholder="Calle" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <div *ngIf="(this.formularioDireccion.controls['fechaHora'].errors?.['fechaHoraInvalida']) || ( this.formularioDireccion.controls['fechaHora'].touched)" class="row">
+                        <div class="col-8 text-danger">Introduzca una fecha y hora validas por favor.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </form>
 
-    <br>
-
-    <hr>
-    <div class="container">
-        <div class="row">
-
-            <div class="form-check col-4">
-                <input (click)="checkOp()" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="efectivo" [(ngModel)]="opcionDePagoSeleccionada">
-                <label class="form-check-label" for="flexRadioDefault1">
-              Efectivo
-            </label>
+    <div class="row mb-4">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="form-check col-3">
+                    <input class="form-check-input" (click)="checkOp()" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="fecha" [(ngModel)]="opcionEnvioSeleccionada">
+                    <label class="form-check-label" for="flexRadioDefault1" value="fecha">
+                      Establecer fecha y hora de envio
+                    </label>
+                </div>
+                <div class="form-check col-3">
+                    <input class="form-check-input" (click)="checkOp()" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="Lo antes posible" [(ngModel)]="opcionEnvioSeleccionada" checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Enviar lo antes posible
+                    </label>
+                </div>
             </div>
-            <div class="form-check col-4">
-                <input (click)="checkOp()" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="credito" [(ngModel)]="opcionDePagoSeleccionada">
-                <label class="form-check-label" for="flexRadioDefault1">
-              Credito
-            </label>
-            </div>
-            <div class="form-check col-4">
-                <input (click)="checkOp()" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="debito" [(ngModel)]="opcionDePagoSeleccionada">
-                <label class="form-check-label" for="flexRadioDefault1">
-              Debito
-            </label>
-            </div>
-
         </div>
     </div>
 
     <br>
-    <br>
 
-    <ng-container *ngComponentOutlet="componenteCargado"></ng-container>
+    <button class="btn btn-success" [disabled]="!this.formularioDireccion.valid" routerLink="/checkout">Ir a checkout</button>
+    <hr>
 
-    <br>
-    <br>
 
 </div>

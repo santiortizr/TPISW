@@ -9,19 +9,22 @@
             <div class="col-6">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Numero de Tarjeta</span>
-                    <input type="text" formControlName="nroTarjeta" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" formControlName="nroTarjeta" class="form-control" aria-label="Username" aria-describedby="basic-addon1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="16">
+
+                </div>
+
+                <div *ngIf="this.formularioTC.controls['nroTarjeta'].errors?.['tarjetaInvalida'] && this.formularioTC.controls['nroTarjeta'].touched" class="row">
+                    <div class="col-8 text-danger">El numero de tarjeta ingresado es invalido.</div>
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-3">
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon1">Venc</span>
-                    <span class="input-group-text" id="basic-addon1">Mes</span>
-                    <select class="form-select" formControlName="nroTarjeta">
-                        <option *ngFor="let mes of meses; let i = index" [value]="i"> {{ mes }} </option>
-                    </select>
-                    <span class="input-group-text" id="basic-addon1">Año</span>
-                    <input type="number" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="text" formControlName="fechaVenc" class="form-control" aria-label="Username" placeholder="MM/AAAA" aria-describedby="basic-addon1" maxlength="7" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 47">
+                    <div *ngIf="this.formularioTC.controls['fechaVenc'].errors?.['fechaInvalida']" class="row">
+                        <div class="col-8 text-danger">La fecha ingresada es invalida.</div>
+                    </div>
                 </div>
             </div>
 
@@ -32,16 +35,28 @@
                     <span class="input-group-text" id="basic-addon1">Titular</span>
                     <input formControlName="titular" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
                 </div>
+                <div *ngIf="this.formularioTC.controls['titular'].errors?.['required'] && this.formularioTC.controls['titular'].touched" class="row">
+                    <div class="col-8 text-danger">Debe ingresar el nombre del titular de la tarjeta.</div>
+                </div>
             </div>
             <div class="col-3">
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon1">CVC</span>
-                    <input formControlName="cvc" type="string" class="form-control" aria-label="Username" aria-describedby="basic-addon1" maxlength="3">
+                    <input formControlName="cvc" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" maxlength="3" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                </div>
+                <div *ngIf="(this.formularioTC.controls['cvc'].errors?.['required'] || this.formularioTC.controls['cvc'].errors?.['minLength']) && this.formularioTC.controls['cvc'].touched" class="row">
+                    <div class="col-8 text-danger">El CVC ingresado no es valido</div>
                 </div>
             </div>
         </div>
 
-        <button type="submit">Submit</button>
+
+
+        <div class="row mt-4 mb-2">
+            <div class="col-3">
+                <button routerLink="checkout" type="submit" class="btn btn-success" (click)="onSubmit()" routerLink="/pedido-realizado" [disabled]="!formularioTC.valid">Ir a Checkout</button>
+            </div>
+        </div>
     </form>
 
 </div>

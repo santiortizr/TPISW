@@ -1,0 +1,36 @@
+<div class="container mt-4 bg-dark" data-bs-theme="dark">
+    <div class="d-flex justify-content-left row mt-4" data-bs-them="dark">
+
+        <div class="col-8 mt-4">
+            <h1>Metodos de pago</h1>
+        </div>
+        <hr>
+    </div>
+
+    <div class="input-group">
+        <div class="form-check col-3">
+            <input (click)="determinarMetodoDePago()" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="efectivo" [(ngModel)]="opcionPagoSeleccionada">
+            <label class="form-check-label" for="flexRadioDefault1" value="fecha">
+              Efectivo
+            </label>
+        </div>
+        <div class="form-check col-3">
+            <input (click)="determinarMetodoDePago()" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="credito" [(ngModel)]="opcionPagoSeleccionada" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              Tarjeta de Credito
+            </label>
+        </div>
+        <div class="form-check col-3">
+            <input (click)="determinarMetodoDePago()" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="debito" [(ngModel)]="opcionPagoSeleccionada" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              Tarjeta de Debito
+            </label>
+        </div>
+    </div>
+
+    <hr>
+
+    <ng-container *ngComponentOutlet="componenteCargado" #container></ng-container>
+
+
+</div>

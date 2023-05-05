@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Select } from '../interfaces/select.interface';
 import { EfectivoComponent } from '../efectivo/efectivo.component';
 import { TarjetaDeCreditoComponent } from '../tarjeta-de-credito/tarjeta-de-credito.component';
+import { FormularioAccesible } from '../interfaces/formularioAccesible.interface';
+import { TarjetaDeDebitoComponent } from '../tarjeta-de-debito/tarjeta-de-debito.component';
 
 @Component({
   selector: 'app-pago',
@@ -12,11 +14,10 @@ import { TarjetaDeCreditoComponent } from '../tarjeta-de-credito/tarjeta-de-cred
 export class PagoComponent implements OnInit{
   public ciudades: string[];
   public formularioDireccion!: FormGroup;
-  public opcionesDePago: Select[];
-  public opcionDePagoSeleccionada: string;
-  public componenteCargado: any = TarjetaDeCreditoComponent;
+  public componenteCargado: any = TarjetaDeDebitoComponent;
+  public opcionEnvioSeleccionada: string;
 
-  constructor(private _fb: FormBuilder){
+  constructor(private _fb: FormBuilder, private resolver: ComponentFactoryResolver){
     this.ciudades = [
       '',
       'Buenos Aires',
@@ -45,13 +46,9 @@ export class PagoComponent implements OnInit{
       'Carlos Paz'
     ].sort();
 
-    this.opcionesDePago = [
-      {value: "efectivo", option: "Efectivo"},
-      {value: "credito", option: "Credito"},
-      {value: "debito", option: "Debito"}
-    ]
 
-    this.opcionDePagoSeleccionada = "efectivo";
+
+    this.opcionEnvioSeleccionada = "Lo Antes Posible"
   }
 
   ngOnInit(): void {
@@ -59,12 +56,61 @@ export class PagoComponent implements OnInit{
       selectCiudad : ['', [Validators.required]],
       numero       : ['', [Validators.required, Validators.min(0)]],
       calle        : ['', [Validators.required]],
-      referencias  : ['', []]
+      referencias  : ['', []],
+      fechaHora    : ['', []]
+      //fecha        : ['', [this.checkearFechaValida]],
+      //hora         : ['', [this.checkearHoraValida]] 
     })
   }
+
+  public checkearFechaHoraValida( control : FormControl ){
+    const fechaHoraInput = new Date(control.value);
+
+  // Obtener la fecha y hora actual
+  const fechaHoraActual = new Date();
+
+  // Comparar las fechas y horas
+  if ((fechaHoraInput > fechaHoraActual) && this.opcionEnvioSeleccionada == "fecha") {
+    return null
+  } else {
+    return {
+      fechaHoraInvalida: true
+    }
+  }
+  }
+
+  public checkearHoraValida( control : FormControl ){
+    // Obtener el valor del input
+    const horaIngresada = control.value;
+    
+    // Crear un objeto de fecha con la hora ingresada por el usuario
+    const horaIngresadaDate = new Date(`2000-01-01T${horaIngresada}`);
+    
+    // Crear un objeto de fecha con la hora actual
+    const horaActual = new Date();
+    
+    // Comparar las horas
+    if (horaIngresadaDate.getHours() < horaActual.getHours() ||
+        (horaIngresadaDate.getHours() === horaActual.getHours() && horaIngresadaDate.getMinutes() < horaActual.getMinutes())) {
+      return {
+        horaInvalida: true
+      }
+    } else {
+      return null;
+    }
+  }
   
+
   checkOp(){
-    console.log(this.opcionDePagoSeleccionada)
+    console.log(this.opcionEnvioSeleccionada)
+  }
+
+  checkErrors(){
+    console.log(this.formularioDireccion.controls['selectCiudad'].errors)
+    console.log(this.formularioDireccion.controls['numero'].errors)
+    console.log(this.formularioDireccion.controls['calle'].errors)
+    console.log(this.formularioDireccion.controls['referencias'].errors)
+    console.log(this.formularioDireccion.controls['fechaHora'].errors)
   }
   
 }

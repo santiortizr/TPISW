@@ -1,1 +1,62 @@
-<p>tarjeta-de-debito works!</p>
+<div class="container mt-1 bg-dark">
+    <div class="row mb-3 ">
+        <h1>Pago con Tarjeta de Debito</h1>
+    </div>
+
+
+    <form [formGroup]="formularioTD" (submit)="onSubmit()">
+        <div class="row">
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Numero de Tarjeta</span>
+                    <input type="text" formControlName="nroTarjeta" class="form-control" aria-label="Username" aria-describedby="basic-addon1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="16">
+
+                </div>
+
+                <div *ngIf="this.formularioTD.controls['nroTarjeta'].errors?.['tarjetaInvalida'] && this.formularioTD.controls['nroTarjeta'].touched" class="row">
+                    <div class="col-8 text-danger">El numero de tarjeta ingresado es invalido.</div>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">Venc</span>
+                    <input type="text" formControlName="fechaVenc" class="form-control" aria-label="Username" placeholder="MM/AAAA" aria-describedby="basic-addon1" maxlength="7" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 47">
+                    <div *ngIf="this.formularioTD.controls['fechaVenc'].errors?.['fechaInvalida']" class="row">
+                        <div class="col-8 text-danger">La fecha ingresada es invalida.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">Titular</span>
+                    <input formControlName="titular" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+                <div *ngIf="this.formularioTD.controls['titular'].errors?.['required'] && this.formularioTD.controls['titular'].touched" class="row">
+                    <div class="col-8 text-danger">Debe ingresar el nombre del titular de la tarjeta.</div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">CVC</span>
+                    <input formControlName="cvc" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" maxlength="3" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                </div>
+                <div *ngIf="(this.formularioTD.controls['cvc'].errors?.['required'] || this.formularioTD.controls['cvc'].errors?.['minLength']) && this.formularioTD.controls['cvc'].touched" class="row">
+                    <div class="col-8 text-danger">El CVC ingresado no es valido</div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row mt-4 mb-2">
+            <div class="col-3">
+                <button class="btn btn-success" (click)="onSubmit()" type="submit" routerLink="/pedido-realizado" [disabled]="!formularioTD.valid">Confirmar</button>
+            </div>
+        </div>
+    </form>
+
+</div>

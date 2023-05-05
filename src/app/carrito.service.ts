@@ -75,5 +75,9 @@ export class CarritoService {
 
     return subtotal;
   }
+
+  public limpiarCarrito(){
+    this.carrito.splice(0, this.carrito.length)
+  }
   
 }

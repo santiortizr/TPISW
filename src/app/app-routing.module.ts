@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { RealizarPedidoComponent } from './realizar-pedido/realizar-pedido.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { PagoComponent } from './pago/pago.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { TarjetaDeDebitoComponent } from './tarjeta-de-debito/tarjeta-de-debito.component';
+import { PedidoFinalizadoComponent } from './pedido-finalizado/pedido-finalizado.component';
 
 const routes: Routes = [
   {
@@ -17,7 +20,16 @@ const routes: Routes = [
   {
     path: 'pago',
     component: PagoComponent
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent
+  },
+  {
+    path: 'pedido-realizado',
+    component: PedidoFinalizadoComponent
   }
+
 ];
 
 @NgModule({
