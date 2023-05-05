@@ -45,13 +45,13 @@
             <div class="col-6">
                 <div class="input-group">
                     <div class="form-check col-3">
-                        <input class="form-check-input" (click)="checkOp()" type="radio" value="fecha" formControlName="opcionEnvioSeleccionada">
+                        <input class="form-check-input" type="radio" value="fecha" formControlName="opcionEnvioSeleccionada">
                         <label class="form-check-label" for="flexRadioDefault1" value="fecha">
                           Establecer fecha y hora de envio
                         </label>
                     </div>
                     <div class="form-check col-3">
-                        <input class="form-check-input" (click)="checkOp()" type="radio" value="Lo antes posible" formControlName="opcionEnvioSeleccionada">
+                        <input class="form-check-input" type="radio" value="Lo antes posible" formControlName="opcionEnvioSeleccionada">
                         <label class="form-check-label" for="flexRadioDefault2">
                           Enviar lo antes posible
                         </label>
@@ -81,7 +81,20 @@
 
     <br>
 
-    <button class="btn btn-success mb-4" [disabled]="!this.formularioDireccion.valid" routerLink="/checkout">Ir a checkout</button>
+    <div class="row">
+        <div class="col-4">
+            <button class="btn btn-success mb-4" [disabled]="!this.formularioDireccion.valid" routerLink="/checkout">Ir a checkout</button>
+        </div>
+
+        <div class="col-4">
+            <button class="btn btn-success mb-4" routerLink="/carrito">Volver a carrito</button>
+        </div>
+
+        <div class="col-4">
+            <button class="btn btn-success mb-4" routerLink="/">Volver a realizar pedido</button>
+        </div>
+    </div>
+
 
     <br>
 

@@ -59,7 +59,7 @@ export class PagoComponent implements OnInit{
       fechaHora    : ['', [ this.checkearFechaHoraValida]]
       //fecha        : ['', [this.checkearFechaValida]],
       //hora         : ['', [this.checkearHoraValida]] 
-    })
+    } , {validators: this.validarFechaEnvio })
   }
 
   public checkearFechaHoraValida = (control: FormControl) => {
@@ -112,17 +112,14 @@ export class PagoComponent implements OnInit{
     }
   }
   
-
-  checkOp(){
-    console.log(this.formularioDireccion.controls['opcionEnvioSeleccionada'].value)
+  validarFechaEnvio(formGroup: FormGroup) {
+    const enviar = formGroup.get('opcionEnvioSeleccionada')!.value;
+    const fechaEnvio = formGroup.get('fechaHora');
+    if (enviar === 'fecha' && (fechaEnvio!.errors || !fechaEnvio!.value)) {
+      fechaEnvio!.setErrors({ invalid: true });
+    } else {
+      fechaEnvio!.setErrors(null);
+    }
   }
 
-  checkErrors(){
-    console.log(this.formularioDireccion.controls['selectCiudad'].errors)
-    console.log(this.formularioDireccion.controls['numero'].errors)
-    console.log(this.formularioDireccion.controls['calle'].errors)
-    console.log(this.formularioDireccion.controls['referencias'].errors)
-    console.log(this.formularioDireccion.controls['fechaHora'].errors)
-  }
-  
 }
